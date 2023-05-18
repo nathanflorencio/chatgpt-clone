@@ -15,7 +15,7 @@ export const Footer = ({ disabled, onSendMessage } : Props) => {
         />
         <div className="pt-3 text-center text-xs text-gray-300">
           Feito por Nathan Florencio. Permitida a cópia e uso para qualquer fim.<br/>
-          <a href="http://nateflorencio.vercel.app" className="underline">
+          <a href="http://nateflorencio.vercel.app" target="_blank" className="underline">
             Visite meu site, clicando aqui.
           </a>
         </div>

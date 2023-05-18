@@ -36,7 +36,7 @@ export const Sidebar = ({ open, onClose, onClear, onNewChat, children } : Props)
             <SidebarButton 
               icon={<IconTrash width={16} height={16} />}
               label="Limpar todas as conversas"
-              onClick={() => {}}
+              onClick={onClear}
             />
           </div>
 
