@@ -6,6 +6,7 @@ import { Header } from "@/components/Header"
 import { Sidebar } from "@/components/Sidebar"
 import { SidebarChatButton } from "@/components/SidebarChatButton"
 import { Chat } from "@/types/Chat"
+import { openai } from "@/utils/openai"
 import { useEffect, useState } from "react"
 import { v4 as uuidv4 } from 'uuid'
 
@@ -27,20 +28,24 @@ const Page = () => {
   const openSidebar = () => setSidebarOpened(true)
   const closeSidebar = () => setSidebarOpened(false)
 
-  const getAIResponse = () => {
-    setTimeout(() => {
-      let chatListClone = [...chatList]
-      let chatIndex = chatListClone.findIndex(item => item.id === chatActiveId)
-      if (chatIndex > -1) {
+  const getAIResponse = async () => {
+    let chatListClone = [...chatList]
+    let chatIndex = chatListClone.findIndex(item => item.id === chatActiveId)
+    if (chatIndex > -1) {
+      const response = await openai.generate(
+        openai.translateMessages(chatListClone[chatIndex].messages)
+      )
+
+      if (response) {
         chatListClone[chatIndex].messages.push({
           id: uuidv4(),
           author: 'ai',
-          body: 'Aqui vai a resposta da AI :)'
+          body: response
         })
       }
-      setChatList(chatListClone)
-      setAILoading(false)
-    }, 2000)
+    }
+    setChatList(chatListClone)
+    setAILoading(false)
   }
 
   const handleClearConversations = () => {
